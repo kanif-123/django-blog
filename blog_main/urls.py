@@ -24,7 +24,14 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
     path('category/', include('blogs.urls')),
-    path('<slug:slug>/', BlogsView.blogs, name='blogs'),
-    # search endpoint
-    path('blog/search/', BlogsView.search, name='search'),
+     # search endpoint
+    path('blogs/search/', BlogsView.search, name='search'), 
+    path('blogs/<slug:slug>/', BlogsView.blogs, name='blogs'),
+   
+    # registration form 
+    path('register/', views.register, name='register'), 
+    # login form 
+    path('login/', views.login, name='login'), 
+    # logout function
+    path('logout/', views.logout, name='logout')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
