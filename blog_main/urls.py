@@ -33,5 +33,9 @@ urlpatterns = [
     # login form 
     path('login/', views.login, name='login'), 
     # logout function
-    path('logout/', views.logout, name='logout')
+    path('logout/', views.logout, name='logout'),
+
+    # Dashboards
+    path('dashboard/', include('dashboards.urls')),
+    # dashboards.urls means in app in dashboards urls    
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
