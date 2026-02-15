@@ -3,8 +3,9 @@
 from django.shortcuts import get_object_or_404, redirect, render
 from blogs.models import Blog, Category
 from django.contrib.auth.decorators import login_required
-from .forms import BlogPostForm, CategoryForm
+from .forms import AddUserForm, BlogPostForm, CategoryForm, EditUserForm
 from django.utils.text import slugify
+from django.contrib.auth.models import User
 
 # Create your views here.
 @login_required(login_url='login')
@@ -103,3 +104,60 @@ def delete_post(request, pk):
     post = get_object_or_404(Blog, pk=pk)
     post.delete()
     return redirect('posts')
+
+
+
+# users 
+def users(request):
+    users = User.objects.all()
+    context = {
+        'users' : users,
+    }
+    return render(request, 'dashboard/users.html', context)
+
+
+def add_user(request):   # View function to handle adding a new user
+   
+    if request.method == 'POST':       # Check if the request method is POST (form submission)
+        
+        form = AddUserForm(request.POST)        # Create form instance with submitted POST data
+        
+        if form.is_valid():         # Check if form data passes validation rules
+            
+            form.save()             # Save the validated user data into the database
+
+            return redirect('users')             # Redirect to 'users' page after successful save
+
+    else:    # If request method is not POST (means GET request)
+
+        form = AddUserForm()         # Create an empty form to display on page load
+
+    # form = AddUserForm() anoter comment
+
+    context = {             # Attach form (empty or with errors) to context
+        'form' : form,
+    }
+
+    return render(request, 'dashboard/add_user.html', context)
+
+# edit user
+
+def edit_user(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    if request.method == 'POST':
+        form = EditUserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            return redirect('users')
+    form = EditUserForm(instance=user)
+    context = {
+        'form' : form,
+    }
+    return render(request, 'dashboard/edit_user.html', context)
+
+# delete user
+
+def delete_user(request, pk):
+    user = get_object_or_404(User, pk=pk)
+    user.delete()
+    return redirect('users')
