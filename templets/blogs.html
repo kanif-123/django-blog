@@ -21,10 +21,40 @@
                 <!-- Preview image figure-->
                 <figure class="mb-4"><img class="img-fluid rounded" src="{{ single_blog.featured_image.url }}" alt="..." /></figure>
                 <!-- Post content-->
-                 <section class="mb-5">
+                <section class="mb-5">
                     <p class="fs-5 mb-4">{{single_blog.short_description}}</p>
                     <p class="fs-5 mb-4">{{single_blog.blog_body}}</p>
-                    </section>
+
+                    <!-- comments -->
+                     <h5>comments({{comment_count}})</h5>
+                     {% if comments %}
+                          {% for comment in comments %}
+                              <div class="card mt-1">
+                                <div class="card-body">
+                                    <p class="card-text mb-0" >{{comment}}</p>
+                                    <small>by {{ comment.user }}</small>
+                                    <small>| {{ comment.created_at | timesince }} ago</small>
+                                </div>
+                              </div>
+                          {% endfor %}
+                     {% else %}
+                     not comment yet 
+                     {% endif %}
+                     <br>
+                     <div class="form_group">
+                        {% if user.is_authenticated %}
+                        <form action="" method="POST">
+                            {% csrf_token %}
+                            <div class="from-group">
+                                <textarea name="comment" class="form-control" placeholder="Write your comment"> </textarea>
+                                <input type="submit" value="Submit" class="btn btn-primary mt-2">
+                            </div>
+                        </form> 
+                        {% else %}
+                        <p> Please <span><a href="{% url 'login' %}">login</a></span> to write comment</p>
+                        {% endif %}
+                     </div>
+                </section>
             </article>
         </div>
         <!-- Side widgets-->

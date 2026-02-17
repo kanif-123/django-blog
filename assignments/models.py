@@ -5,7 +5,7 @@ from django.db import models
 
 class About(models.Model):
     about_heading = models.CharField(max_length=25)
-    about_description = models.TextField(max_length=255)
+    about_description = models.TextField(max_length=300)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = updated_at = models.DateTimeField(auto_now=True)
 
