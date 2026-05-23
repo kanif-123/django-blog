@@ -59,7 +59,7 @@ ROOT_URLCONF = 'blog_main.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templets'],
+        'DIRS': [BASE_DIR / 'templets'],  # <--- 'templets' se pehle BASE_DIR / lagana hai
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
