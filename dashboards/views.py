@@ -7,6 +7,7 @@ from .forms import AddUserForm, BlogPostForm, CategoryForm, EditUserForm
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 from .models import ExcelDocument
+import os  # <-- Ye add karein file delete karne ke liye
 
 # Create your views here.
 @login_required(login_url='login')
@@ -181,3 +182,19 @@ def upload_excel(request):
 def download_excel(request):
     files = ExcelDocument.objects.all().order_by('-uploaded_at')
     return render(request, 'dashboard/download_excel.html', {'files': files})
+
+# delete function 
+def delete_excel(request, pk):
+    # File ko database se dhoondhein
+    document = get_object_or_404(ExcelDocument, pk=pk)
+    
+    # Server ke storage (media folder) se actual file ko delete karein
+    if document.file:
+        if os.path.isfile(document.file.path):
+            os.remove(document.file.path)
+            
+    # Database se record delete karein
+    document.delete()
+    
+    # Delete hone ke baad wapas download list par bhej dein
+    return redirect('download_excel')

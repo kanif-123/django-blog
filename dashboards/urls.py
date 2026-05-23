@@ -22,4 +22,6 @@ urlpatterns = [
     # excel file upload url 
     path('upload-excel/', views.upload_excel, name='upload_excel'),
     path('download-excel/', views.download_excel, name='download_excel'),
+    # excel file delete  (pk = id of the file)
+    path('delete-excel/<int:pk>/', views.delete_excel, name='delete_excel'),
 ]
