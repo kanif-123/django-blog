@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-f7e4j*xct#yepb-o()5ce#6vo+xv&=g%wk@rb!(@x_j0-o28-i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['kanifb.pythonanywhere.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
