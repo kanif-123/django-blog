@@ -19,4 +19,7 @@ urlpatterns = [
     path('users/add', views.add_user, name='add_user'),
     path('users/edit/<int:pk>/', views.edit_user, name='edit_user'),
     path('users/delete/<int:pk>/', views.delete_user, name='delete_user'), 
+    # excel file upload url 
+    path('upload-excel/', views.upload_excel, name='upload_excel'),
+    path('download-excel/', views.download_excel, name='download_excel'),
 ]

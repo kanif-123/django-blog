@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import AddUserForm, BlogPostForm, CategoryForm, EditUserForm
 from django.utils.text import slugify
 from django.contrib.auth.models import User
+from .models import ExcelDocument
 
 # Create your views here.
 @login_required(login_url='login')
@@ -161,3 +162,22 @@ def delete_user(request, pk):
     user = get_object_or_404(User, pk=pk)
     user.delete()
     return redirect('users')
+
+
+# upload excel file
+
+def upload_excel(request):
+    if request.method == 'POST':
+        # form se multiple files nikalne ke liye getlist() use karte hain
+        files = request.FILES.getlist('excel_files')
+        
+        for f in files:
+            ExcelDocument.objects.create(file=f)
+            
+        return redirect('download_excel')
+        
+    return render(request, 'dashboard/upload_excel.html') # Template ka rasta dhyan se dekhein
+
+def download_excel(request):
+    files = ExcelDocument.objects.all().order_by('-uploaded_at')
+    return render(request, 'dashboard/download_excel.html', {'files': files})

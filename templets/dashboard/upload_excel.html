@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% block content %}
+<div class="container mt-4">
+    <h2>Upload Multiple Excel Files</h2>
+    <p>Ek sath 100-150 files select karein taaki upload smooth ho.</p>
+    
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="excel_files" accept=".xls,.xlsx" multiple required class="form-control mb-3">
+        <button type="submit" class="btn btn-primary">Upload Files</button>
+    </form>
+    <br>
+    <a href="{% url 'download_excel' %}" class="btn btn-secondary">Go to Download Page</a>
+</div>
+{% endblock %}
